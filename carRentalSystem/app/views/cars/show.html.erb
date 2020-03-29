@@ -1,0 +1,56 @@
+<p id="notice"><%= notice %></p>
+
+<%=image_tag(@car.image) %>
+
+<p>
+  <strong>Aircondition:</strong>
+  <%= @car.aircondition %>
+</p>
+
+<p>
+  <strong>Price:</strong>
+  <%= @car.price %>
+</p>
+
+<p>
+  <strong>Automatic:</strong>
+  <%= @car.automatic %>
+</p>
+
+<p>
+  <strong>Model:</strong>
+  <%= @car.model %>
+</p>
+
+<p>
+  <strong>Production year:</strong>
+  <%= @car.production_year %>
+</p>
+
+<p>
+  <strong>Engine:</strong>
+  <%= @car.engine %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @car.description %>
+</p>
+
+<p>
+  <strong>Rank:</strong>
+  <%= @car.rank %>
+</p>
+
+<p>
+  <strong>Rent:</strong>
+  <%= @car.rent %>
+</p>
+
+<p>
+  <strong>Seats:</strong>
+  <%= @car.seats %>
+</p>
+
+<%= link_to 'Edit', edit_car_path(@car) %> |
+<%= link_to 'Back', cars_path %>

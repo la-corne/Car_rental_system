@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  aircondition: false
+  price: 9.99
+  automatic: false
+  model: MyString
+  production_year: 1
+  engine: MyString
+  description: MyText
+
+two:
+  aircondition: false
+  price: 9.99
+  automatic: false
+  model: MyString
+  production_year: 1
+  engine: MyString
+  description: MyText
