@@ -4,7 +4,7 @@ class CarsController < ApplicationController
   # GET /cars
   # GET /cars.json
   def index
-    @cars = Car.all
+    @cars = Car.paginate(page: params[:page], per_page: 12)
   end
 
   # GET /cars/1
@@ -62,13 +62,14 @@ class CarsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_car
-      @car = Car.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def car_params
-      params.require(:car).permit(:aircondition, :price, :automatic, :model, :production_year, :engine, :description, :rent, :rank, :seats, :image)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_car
+    @car = Car.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def car_params
+    params.require(:car).permit(:aircondition, :price, :automatic, :model, :production_year, :engine, :description, :rent, :rank, :seats, :image)
+  end
 end
