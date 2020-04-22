@@ -1,9 +1,11 @@
 class Car < ApplicationRecord
-	has_many :favourites
-	has_many :users , through: :favourites
 	has_many :rentals, dependent: :destroy
 	has_many :reviews, dependent: :destroy
 	has_one_attached :image
+
+	# the cars that the user saved
+	has_many :user_cars
+	has_many :users, through: :user_cars
 
 	validates :model, presence: true, length: { minimum: 3, maximum: 25 }
 	validates :rent, presence: true, numericality: {greater_than: 0 }

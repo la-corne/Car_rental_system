@@ -41,14 +41,16 @@ class UsersController < ApplicationController
   end
 
   def my_saved
-    @favourites = current_user.cars
+    @saved_cars = current_user.savedcars
   end
+
+
 
   # this method handles the user favourite
   def add_cars_to_favourite
-    @car = Car.find(params[:car])
-    # current_user.favourites.build(user_id:current_user.id,car_id: @car.id)
-    current_user.favourites.build(car_id: @car.id)
+
+    @car = User.find(params[:savedcar])
+    current_user.saved_cars.build(savedcar_id: @car.id)
 
     if current_user.save
       flash[:notice] = 'car was successfully added'

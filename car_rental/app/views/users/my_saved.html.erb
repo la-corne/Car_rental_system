@@ -22,8 +22,8 @@
   <div class="container">
     <div class="row">
       <div class="col-lg-8">
-        <% if @favourites.size > 0 %>
-          <% @favourites.each do |car| %>
+        <% if @saved_cars.size > 0 %>
+          <% @saved_cars.each do |car| %>
             <div class="row">
               <!-- Car List Content Start -->
 
@@ -67,7 +67,7 @@
                               <i class="fa fa-star unmark"></i>
                             </p>
                             <!--to delete the recipe from the saved-->
-                            <%= link_to "Unsave", favourite_path(car), method: :delete, class: "rent-btn" %>
+                            <%= link_to "Unsave", saved_car_path(car), method: :delete, class: "rent-btn" %>
                           </div>
                         </div>
                       </div>
