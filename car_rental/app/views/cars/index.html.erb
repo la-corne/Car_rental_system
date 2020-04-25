@@ -77,7 +77,7 @@
                       <div class="col-sm-2">
                         <%= link_to 'Details', @cars[i], class: "rent-btn" %>
                       </div>
-                      <div class="col-sm-1"></div>
+<!--                      <div class="col-sm-1"></div>-->
                       <%if logged_in?%>
                         <div class="col-sm-2">
                           <% if current_user.car_not_saved?(@cars[i].id) %>
@@ -86,13 +86,24 @@
                             <%= link_to "Unsave", saved_car_path(@cars[i]), method: :delete, class: "rent-btn" %>
                           <% end %>
                         </div>
+                        <div class="col-sm-2">
+                          <% if current_user.car_not_rented?(@cars[i].id) %>
+                            <%#= link_to "Rent", rent_car_path(user: current_user, rentedcar: @cars[i]), class: "rent-btn", method: :post %>
+                            <%= link_to "Rent", new_rented_car_path(rentedcar: @cars[i]), class: "rent-btn" %>
+                            <%#= link_to "Rent", new_rented_car_path, class: "rent-btn" %>
+                        <% else %>
+                            <%= link_to "Cancel", rented_car_path(@cars[i]), method: :delete, class: "rent-btn" %>
+                          <% end %>
+                        </div>
+
+
                       <%end %>
-                      <div class="col-sm-1"></div>
+<!--                      <div class="col-sm-1"></div>-->
                       <%if logged_in? && current_user.admin?%>
                         <div class="col-sm-2">
                           <%= link_to 'Edit', edit_car_path(@cars[i]), class: "rent-btn" %>
                         </div>
-                        <div class="col-sm-1"></div>
+<!--                        <div class="col-sm-1"></div>-->
                         <div class="col-sm-2">
                           <%= link_to 'Delete', @cars[i], method: :delete, data: {confirm: 'Are you sure?'}, class: "rent-btn" %>
                         </div>
@@ -145,7 +156,7 @@
                         <div class="col-sm-2">
                           <%= link_to 'Details', @cars[i], class: "rent-btn" %>
                         </div>
-                        <div class="col-sm-1"></div>
+<!--                        <div class="col-sm-1"></div>-->
                         <%if logged_in?%>
                           <div class="col-sm-2">
                             <% if current_user.car_not_saved?(@cars[i].id) %>
@@ -154,13 +165,23 @@
                               <%= link_to "Unsave", saved_car_path(@cars[i]), method: :delete, class: "rent-btn" %>
                             <% end %>
                           </div>
+
+                          <div class="col-sm-2">
+                            <% if current_user.car_not_rented?(@cars[i].id) %>
+                              <%#= link_to "Rent", rent_car_path(user: current_user, rentedcar: @cars[i]), class: "rent-btn", method: :post %>
+                              <%= link_to "Rent", new_rented_car_path(rentedcar: @cars[i]), class: "rent-btn" %>
+
+                          <% else %>
+                              <%= link_to "Cancel", rented_car_path(@cars[i]), method: :delete, class: "rent-btn" %>
+                            <% end %>
+                          </div>
                         <%end %>
-                        <div class="col-sm-1"></div>
+<!--                        <div class="col-sm-1"></div>-->
                         <%if logged_in? && current_user.admin?%>
                           <div class="col-sm-2">
                             <%= link_to 'Edit', edit_car_path(@cars[i]), class: "rent-btn" %>
                           </div>
-                          <div class="col-sm-1"></div>
+<!--                          <div class="col-sm-1"></div>-->
                           <div class="col-sm-2">
                             <%= link_to 'Delete', @cars[i], method: :delete, data: {confirm: 'Are you sure?'}, class: "rent-btn" %>
                           </div>

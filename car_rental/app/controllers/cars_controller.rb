@@ -72,4 +72,12 @@ class CarsController < ApplicationController
     def car_params
       params.require(:car).permit(:model, :rank, :rent, :automatic, :airconditioned, :productionYear, :seats, :discription, :image)
     end
+
+    def require_admin
+      if logged_in? and !current_user.admin?
+        #flash[:danger] = 'Only admin users can perform that action'
+        redirect_to root_path
+      end
+    end
+
 end

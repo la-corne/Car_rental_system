@@ -1,7 +1,9 @@
 class User < ApplicationRecord
   has_many :saved_cars
   has_many :savedcars, through: :saved_cars
-  has_many :rentals, dependent: :destroy
+  has_many :rented_cars
+  has_many :rentedcars, through: :rented_cars
+#  has_many :rentals, dependent: :destroy
   has_many :reviews
 
   validates :user_name, presence: true, length: {minimum: 3, maximum: 25}, uniqueness: {case_sensitive: false}
@@ -23,9 +25,9 @@ class User < ApplicationRecord
     saved_cars.where(savedcar_id: car_id).count < 1
   end
 
-  def find_user_car_rank(car_id)
-    review = reviews.where(car_id: car_id)
-    return review.rank
+  def car_not_rented?(car_id)
+    # if count is < 1 means that the count is zero so it isn't saved
+    rented_cars.where(rentedcar_id: car_id).count < 1
   end
 
 end
