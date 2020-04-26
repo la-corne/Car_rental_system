@@ -2,7 +2,7 @@
 #
 # class SavedCarsControllerTest < ActionDispatch::IntegrationTest
 #   setup do
-#     @saved_car = saved_cars(:one)
+#     @saved_car = SavedCar.new(user_id: 3, savedcar_id: 3)
 #   end
 #
 #
