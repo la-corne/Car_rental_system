@@ -52,6 +52,22 @@ class CarsController < ApplicationController
     end
   end
 
+  def search
+    if params[:search].blank?
+      redirect_to(cars_url, alert: "Empty field!") and return
+    elsif params[:attribute] == "Name"
+      @cars= Car.where("model LIKE ?", "%" + params[:search] + "%" )
+    elsif params[:attribute] == "Year"
+      @cars= Car.where("productionYear = ?",params[:search])
+    elsif params[:attribute] == "Price"
+      @cars= Car.where("rent = ?",params[:search])
+    elsif params[:attribute] == "None"
+      redirect_to(cars_url, alert: "Empty field!") and return
+    end
+  end
+
+
+
   # DELETE /cars/1
   # DELETE /cars/1.json
   def destroy
