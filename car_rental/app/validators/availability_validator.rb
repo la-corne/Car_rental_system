@@ -7,11 +7,11 @@ class AvailabilityValidator < ActiveModel::EachValidator
     # Rails.logger.info "record: #{record}"
     rents.each do |rent|
       if record.rent_from_date >= rent.rent_from_date and record.rent_to_date <= rent.rent_to_date
-        record.errors.add(attribute, "not available")
+        record.errors.add(attribute, "not available from #{rent.rent_from_date} to #{rent.rent_to_date}")
       elsif record.rent_from_date >= rent.rent_from_date and record.rent_from_date <= rent.rent_to_date
-        record.errors.add(attribute, "not available")
+        record.errors.add(attribute, "not available from #{rent.rent_from_date} to #{rent.rent_to_date}")
       elsif record.rent_to_date >= rent.rent_from_date and record.rent_to_date <= rent.rent_to_date
-        record.errors.add(attribute, "not available")
+        record.errors.add(attribute, "not available from #{rent.rent_from_date} to #{rent.rent_to_date}")
       end
     end
 

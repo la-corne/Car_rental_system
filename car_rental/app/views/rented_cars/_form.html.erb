@@ -22,17 +22,17 @@
 
     <div class="field">
       <h6>Card Expired Date:</h6>
-      <%= form.date_field  :credit_expired_date ,class:"form-control",  autofocus: true, placeholder: "Card Expired Date" %>
+      <%= form.date_field  :credit_expired_date ,class:"form-control",  autofocus: true, placeholder: "Card Expired Date" , min: Date.today%>
     </div>
 
     <div class="field">
       <h6>Rent From:</h6>
-      <%= form.date_field  :rent_from_date ,class:"form-control",  autofocus: true, placeholder: "From" %>
+      <%= form.date_field  :rent_from_date ,class:"form-control",  autofocus: true, placeholder: "From" , min: Date.today%>
     </div>
 
     <div class="field">
       <h6>Rent To:</h6>
-      <%= form.date_field  :rent_to_date ,class:"form-control",  autofocus: true, placeholder: "To" %>
+      <%= form.date_field  :rent_to_date ,class:"form-control",  autofocus: true, placeholder: "To" , min: Date.today%>
     </div>
 
 

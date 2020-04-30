@@ -27,6 +27,11 @@ class RentedCar < ApplicationRecord
   # end
   #
 
+  def unavailable_dates
+    rented_cars.pluck(:rent_from_date, :rent_to_date).map do |range|
+      { from: range[0], to: range[1] }
+    end
+  end
 
 
   private
