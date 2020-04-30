@@ -1,5 +1,5 @@
 <%= render 'shared/errors', object:@rented_car %>
-<%= form_with(model: rented_car, local: true) do |form| %>
+<%= form_for(@rented_car, local: true) do |form| %>
 
     <div class="field">
       <%= form.text_field :credit_card_no,class: "form-control",  autofocus: true, placeholder: "Credit Card Number" %>
@@ -31,7 +31,7 @@
       </div>
       <div class="col-sm-6">
         <div class="log-btn">
-          <%= form.submit "Rent",class: "btn" %>
+          <%= form.submit "Done",class: "btn" %>
         </div>
       </div>
     </div>

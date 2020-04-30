@@ -1,6 +1,6 @@
 class RentedCarsController < ApplicationController
   #before_action :set_rented_car, only: [:show, :edit, :update]
-  before_action :require_admin, only: [:destroy, :index]
+  before_action :require_admin, only: [:index]
 
   # GET /rented_cars
   # GET /rented_cars.json
@@ -32,9 +32,12 @@ class RentedCarsController < ApplicationController
 
   # GET /rented_cars/1/edit
   def edit
-    @rented_car = RentedCar.new
-    $rented_car = RentedCar.find(params[:id])
-    logger.info "edit car =: #{$rented_car.id}"
+    #@rented_car = RentedCar.new
+    @rented_car = RentedCar.find(params[:id])
+    $rented_car = @rented_car
+    $car = Car.find($rented_car.car_id)
+    # logger.info "edit car =: #{$rented_car.id}"
+
   end
 
   # POST /rented_cars
@@ -57,7 +60,7 @@ class RentedCarsController < ApplicationController
   def update
     @rented_car = $rented_car
     if @rented_car.update(rented_car_params)
-      redirect_back(fallback_location: '/')
+      redirect_to rent_car_path
     else
       render 'edit'
     end
@@ -68,17 +71,19 @@ class RentedCarsController < ApplicationController
   def destroy
     @rented_car = current_user.rented_cars.where(car_id: params[:id]).first
     @rented_car.destroy
+    logger.info"here"
     # respond_to do |format|
     #   format.html { redirect_to rented_cars_url, notice: 'Rented car was successfully destroyed.' }
     #   format.json { head :no_content }
     # end
-    redirect_back(fallback_location: '/')
+    redirect_to rent_car_path
   end
 
   def admin_destroy
     @rented_car = RentedCar.new
     @rented_car = RentedCar.find(params[:id])
     @rented_car.destroy
+    logger.info"hhiiii"
     redirect_back(fallback_location: '/')
   end
 
