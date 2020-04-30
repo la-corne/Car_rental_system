@@ -1,6 +1,5 @@
 class RentedCarsController < ApplicationController
-  before_action :set_rented_car, only: [:show, :edit, :update, :destroy]
-  #before_action :set_car
+  #before_action :set_rented_car, only: [:show, :edit, :update]
 
   # GET /rented_cars
   # GET /rented_cars.json
@@ -66,24 +65,24 @@ class RentedCarsController < ApplicationController
   # DELETE /rented_cars/1
   # DELETE /rented_cars/1.json
   def destroy
+    @rented_car = current_user.rented_cars.where(car_id: params[:id]).first
     @rented_car.destroy
-    respond_to do |format|
-      format.html { redirect_to rented_cars_url, notice: 'Rented car was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    # respond_to do |format|
+    #   format.html { redirect_to rented_cars_url, notice: 'Rented car was successfully destroyed.' }
+    #   format.json { head :no_content }
+    # end
+    redirect_back(fallback_location: '/')
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_rented_car
-      @rented_car = RentedCar.find(params[:id])
-    end
+    # def set_rented_car
+    #   @rented_car = RentedCar.where("car_id = ? AND user_id = ?",params[:id] ,current_user.id)
+    #   #@rented_car = current_user.rented_cars.where(car_id: params[:car_id]).first
+    #   logger.info "user id =: #{@rented_car.user_id}"
+    #   logger.info "car id =: #{@rented_car.car_id}"
+    # end
 
-    def set_car
-      @car = Car.find(session[:rentedcar_id])
-      logger.info "car id =: #{@car.id}"
-      session.delete(:rentedcar_id)
-    end
 
     # Only allow a list of trusted parameters through.
     def rented_car_params
