@@ -12,7 +12,11 @@ Rails.application.routes.draw do
 
 #  post 'rent_car', to: 'users#add_cars_to_rent'
 
+  get 'rented', to: 'users#my_rented'
+
   get 'search', to: 'cars#search'
+
+  post 'rented_cars/new'
 
 
   # get 'rented', to: 'users#my_rented'

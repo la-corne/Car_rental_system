@@ -24,10 +24,9 @@ class ApplicationController < ActionController::Base
   end
 
   def current_rented_car
-    # if the current rented already with us return it
+    # if the current user already with us return it
     # if not (||=) go and search for it in the database
     @current_rented_car ||= Car.find(session[:car_id]) if session[:car_id]
   end
-
 
 end

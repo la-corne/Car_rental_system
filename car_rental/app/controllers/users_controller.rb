@@ -44,9 +44,9 @@ class UsersController < ApplicationController
     @saved_cars = current_user.savedcars
   end
 
-  # def my_rented
-  #   @rented_cars = current_user.rentedcars
-  # end
+  def my_rented
+    @rented_cars = current_user.rented_cars
+  end
 
   # this method handles the user favourite
   def add_cars_to_favourite
