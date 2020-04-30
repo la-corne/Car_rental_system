@@ -1,10 +1,11 @@
 class RentedCarsController < ApplicationController
   #before_action :set_rented_car, only: [:show, :edit, :update]
+  before_action :require_admin, only: [:destroy, :index]
 
   # GET /rented_cars
   # GET /rented_cars.json
   def index
-    @rented_cars = RentedCar.all
+    @rented_cars = RentedCar.paginate(page: params[:page], per_page: 12)
   end
 
   # GET /rented_cars/1
@@ -31,6 +32,9 @@ class RentedCarsController < ApplicationController
 
   # GET /rented_cars/1/edit
   def edit
+    @rented_car = RentedCar.new
+    $rented_car = RentedCar.find(params[:id])
+    logger.info "edit car =: #{$rented_car.id}"
   end
 
   # POST /rented_cars
@@ -51,14 +55,11 @@ class RentedCarsController < ApplicationController
   # PATCH/PUT /rented_cars/1
   # PATCH/PUT /rented_cars/1.json
   def update
-    respond_to do |format|
-      if @rented_car.update(rented_car_params)
-        format.html { redirect_to @rented_car, notice: 'Rented car was successfully updated.' }
-        format.json { render :show, status: :ok, location: @rented_car }
-      else
-        format.html { render :edit }
-        format.json { render json: @rented_car.errors, status: :unprocessable_entity }
-      end
+    @rented_car = $rented_car
+    if @rented_car.update(rented_car_params)
+      redirect_back(fallback_location: '/')
+    else
+      render 'edit'
     end
   end
 
@@ -74,6 +75,13 @@ class RentedCarsController < ApplicationController
     redirect_back(fallback_location: '/')
   end
 
+  def admin_destroy
+    @rented_car = RentedCar.new
+    @rented_car = RentedCar.find(params[:id])
+    @rented_car.destroy
+    redirect_back(fallback_location: '/')
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     # def set_rented_car
@@ -82,11 +90,16 @@ class RentedCarsController < ApplicationController
     #   logger.info "user id =: #{@rented_car.user_id}"
     #   logger.info "car id =: #{@rented_car.car_id}"
     # end
-
+  # this will prevent the non admin users from having access to destroy action
+  def require_admin
+    if logged_in? and !current_user.admin?
+      #flash[:danger] = 'Only admin users can perform that action'
+      redirect_to root_path
+    end
+  end
 
     # Only allow a list of trusted parameters through.
     def rented_car_params
-      #params.fetch(:rented_car, {})
       params.require(:rented_car).permit(:credit_card_no, :cvc, :credit_expired_date, :rent_from_date, :rent_to_date)
     end
 end

@@ -13,6 +13,9 @@ Rails.application.routes.draw do
 #  post 'rent_car', to: 'users#add_cars_to_rent'
 
   get 'rented', to: 'users#my_rented'
+  get 'rent_car', to: 'users#add_cars_to_rent'
+
+  delete 'delete', to: 'rented_cars#admin_destroy'
 
   get 'search', to: 'cars#search'
 
