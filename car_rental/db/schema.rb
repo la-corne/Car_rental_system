@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_28_145109) do
+ActiveRecord::Schema.define(version: 2020_05_03_215339) do
 
   create_table "active_storage_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
     t.string "name", null: false
@@ -44,6 +44,30 @@ ActiveRecord::Schema.define(version: 2020_04_28_145109) do
     t.text "discription"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "favourites", primary_key: ["user_id", "car_id"], options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "car_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["car_id"], name: "index_favourites_on_car_id"
+    t.index ["user_id"], name: "index_favourites_on_user_id"
+  end
+
+  create_table "rentals", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "car_id", null: false
+    t.date "start_date", null: false
+    t.date "end_date", null: false
+    t.float "cost", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "userCardNo"
+    t.date "cardExpiredDate"
+    t.integer "cardCVC"
+    t.index ["car_id"], name: "index_rentals_on_car_id"
+    t.index ["user_id"], name: "index_rentals_on_user_id"
   end
 
   create_table "rented_cars", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
@@ -80,6 +104,29 @@ ActiveRecord::Schema.define(version: 2020_04_28_145109) do
     t.index ["user_id"], name: "index_saved_cars_on_user_id"
   end
 
+  create_table "total_rentals", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "car_id"
+    t.bigint "credit_card_no", default: 0, null: false
+    t.integer "cvc", default: 0, null: false
+    t.date "credit_expired_date", default: "2020-04-09", null: false
+    t.date "rent_from_date", default: "2020-04-09", null: false
+    t.date "rent_to_date", default: "2020-04-09", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["car_id"], name: "index_total_rentals_on_car_id"
+    t.index ["user_id"], name: "index_total_rentals_on_user_id"
+  end
+
+  create_table "user_cars", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "car_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["car_id"], name: "index_user_cars_on_car_id"
+    t.index ["user_id"], name: "index_user_cars_on_user_id"
+  end
+
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
     t.string "user_name", limit: 25, null: false
     t.string "password_digest", null: false
@@ -95,6 +142,12 @@ ActiveRecord::Schema.define(version: 2020_04_28_145109) do
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "favourites", "cars"
+  add_foreign_key "favourites", "users"
+  add_foreign_key "rentals", "cars"
+  add_foreign_key "rentals", "users"
   add_foreign_key "reviews", "cars"
   add_foreign_key "reviews", "users"
+  add_foreign_key "user_cars", "cars"
+  add_foreign_key "user_cars", "users"
 end

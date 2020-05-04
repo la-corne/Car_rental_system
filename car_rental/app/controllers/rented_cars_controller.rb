@@ -48,11 +48,24 @@ class RentedCarsController < ApplicationController
     @rented_car.user_id = current_user.id
     @car = Car.find($car.id)
 
+    # save also in total rents
+    @total_rents = TotalRental.new
+    @total_rents.car_id = $car.id
+    @total_rents.user_id = current_user.id
+    @total_rents.credit_card_no = @rented_car.credit_card_no
+    @total_rents.cvc = @rented_car.cvc
+    @total_rents.credit_expired_date = @rented_car.credit_expired_date
+    @total_rents.rent_from_date = @rented_car.rent_from_date
+    @total_rents.rent_to_date = @rented_car.rent_to_date
+    @total_rents.save
+
     if @rented_car.save
       redirect_to @car
     else
       render 'new'
     end
+
+
   end
 
   # PATCH/PUT /rented_cars/1
@@ -71,6 +84,18 @@ class RentedCarsController < ApplicationController
     @rented_car = RentedCar.new(rented_car_params)
     RentedCar.find($rented_car.id).destroy
 
+    # update also in total rents
+    @total_rents = TotalRental.new
+    TotalRental.find($rented_car.id).destroy
+    @total_rents.car_id = car_id
+    @total_rents.user_id = user_id
+    @total_rents.credit_card_no = @rented_car.credit_card_no
+    @total_rents.cvc = @rented_car.cvc
+    @total_rents.credit_expired_date = @rented_car.credit_expired_date
+    @total_rents.rent_from_date = @rented_car.rent_from_date
+    @total_rents.rent_to_date = @rented_car.rent_to_date
+    @total_rents.save
+
 
     # @rented_car.credit_card_no = creditCardNo
     # @rented_car.cvc = cvc
@@ -79,8 +104,6 @@ class RentedCarsController < ApplicationController
     # @rented_car.rent_to_date = rentToDate
     @rented_car.car_id = car_id
     @rented_car.user_id = user_id
-
-
 
 
     logger.info "@rented car: #{@rented_car}"
