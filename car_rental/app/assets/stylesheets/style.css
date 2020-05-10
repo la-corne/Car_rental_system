@@ -2918,10 +2918,22 @@ body,
 	text-align: center;
 	border-radius: 3px;
 }
-
+.meta-details small{
+    float: right;
+}
 .login-form {
 	background-color: #ffd000;
 	padding: 50px 20px 15px;
+}
+
+.jumbotron{
+    background-color: #ffd000;
+    padding: 50px 20px 15px;
+}
+
+.review{
+    background-color: #F9E79F;
+    padding: 50px 20px 15px;
 }
 
 .login-form h3 {

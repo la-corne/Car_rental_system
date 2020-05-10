@@ -5,7 +5,9 @@ class ReviewsController < ApplicationController
   # GET /reviews
   # GET /reviews.json
   def index
-    @reviews = Review.all
+    #@reviews = Review.all
+    # logger.info "Car id = #{@car.id}"
+    @reviews = Review.where(car_id: @car.id).order("created_at DESC")
   end
 
   # GET /reviews/1
@@ -29,7 +31,7 @@ class ReviewsController < ApplicationController
     @review.car_id = @car.id
 
     if @review.save
-      redirect_to @car
+      redirect_to car_reviews_path(@car)
     else
       render 'new'
     end
@@ -54,13 +56,9 @@ class ReviewsController < ApplicationController
   def destroy
     @review.destroy
     respond_to do |format|
-      format.html { redirect_to reviews_url, notice: 'Review was successfully destroyed.' }
+      format.html { redirect_to car_reviews_path(@car), notice: 'Review was successfully destroyed.' }
       format.json { head :no_content }
     end
-  end
-
-  def calculate_rank
-
   end
 
   private

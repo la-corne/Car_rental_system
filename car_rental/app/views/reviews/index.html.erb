@@ -1,44 +1,96 @@
+<body class="loader-active">
+
+<!--== Page Title Area Start ==-->
+<section id="page-title-area" class="section-padding overlay">
+  <div class="container">
+    <div class="row">
+      <!-- Page Title Start -->
+      <div class="col-lg-12">
+        <div class="section-title  text-center">
+          <h2>Reviews</h2>
+          <span class="title-line"><i class="fa fa-car"></i></span>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+        </div>
+      </div>
+      <!-- Page Title End -->
+    </div>
+  </div>
+</section>
+<br>
+<br>
+
 <p id="notice"><%= notice %></p>
 
-<h1>Reviews</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>User</th>
-      <th>Car</th>
-      <th>Rank</th>
-      <th>Content</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+<% @reviews.each do |review| %>
+  <% @user = User.find(review.user_id) %>
+  <% @car = Car.find(review.car_id) %>
 
-  <tbody>
-    <% @reviews.each do |review| %>
-      <tr>
-        <td><%= review.user_id %></td>
-        <td><%= review.car_id %></td>
-        <td><div class="star-rating" data-score= <%= review.rank %> ></div></td>
-<!--        <td><%#= review.rank %></td>-->
-        <td><%= review.content %></td>
-        <td><%= link_to 'Show', car_review_path(review) %></td>
-        <td><%= link_to 'Edit', edit_car_review_path(review) %></td>
-        <td><%= link_to 'Destroy', review, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+  <div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-7 jumbotron">
+
+      <div class="row ">
+        <div class="col-md-1">
+          <div class="recent-tip-thum">
+            <a href="#"><%= image_tag("avatar.png", alt: "JSOFT") %></a>
+          </div>
+        </div>
+        <div class="col-md-1"></div>
+        <div class="col-md-6 ">
+          <br>
+          <h6><%= @user.user_name %></h6>
+          <div class="star-rating" data-score=<%= review.rank %>></div>
+          <br>
+          <%= review.content %>
+        </div>
+
+        <div class="col-md-3 "></div>
+        <div class="col-md-1 ">
+          <!--drop down list-->
+          <div class=" float-right">
+            <div class="btn-group">
+              <button type="button" class="btn btn-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="glyphicon glyphicon-option-horizontal"></span>
+              </button>
+              <div class="dropdown-menu">
+                <%= link_to "Edit", edit_car_review_path(@car, review), class: "dropdown-item" %>
+                <div class="dropdown-divider"></div>
+                <%= link_to "Delete", car_review_path(@car, review), method: :delete,
+                            data: {confirm: "Are you sure you want to delete the review?"},
+                            class: "dropdown-item" %>
+              </div>
+            </div>
+          </div>
+          <!--end of the drop down list-->
+        </div>
+      </div>
+
+      <hr>
+      <div class="meta-details">
+        <small>
+          created from: <%= time_ago_in_words(review.created_at) %> ago,
+          last updated: <%= time_ago_in_words(review.updated_at) %> ago</small>
+      </div>
+    </div>
+
+    <div class="col-md-2"></div>
+  </div>
+
+
+<% end %>
+
 
 <br>
 
-<%= link_to 'New Review', new_review_path %>
-
+<%#= link_to 'New Review', new_review_path %>
+</body>
 
 <script>
     $('.star-rating').raty({
         path: '/assets/',
         readOnly: true,
-        score: function() {
+        score: function () {
             return $(this).attr('data-score');
         }
     });

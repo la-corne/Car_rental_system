@@ -1,11 +1,4 @@
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-
-<%= form_for([ @car,@review]) do |form| %>
+<%= form_for([@car, @review]) do |form| %>
   <% if @review.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@review.errors.count, "error") %> prohibited this review from being saved:</h2>
@@ -18,29 +11,52 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :user_id %>
-    <%= form.text_field :user_id %>
-  </div>
+  <!--  <div class="field">-->
+  <%#= form.label :user_id %>
+  <%#= form.text_field :user_id %>
+  <!--  </div>-->
+  <div class="row">
+    <div class="col-md-5"></div>
+    <div class="col-md-5">
 
-  <div class="field">
-    <%= form.label :car_id %>
-    <%= form.text_field :car_id %>
-  </div>
-
-  <div class="field">
-    <%= form.label :rank %>
-    <div id="star-rating">
+      <% if @car.image.attached? %>
+        <div class="recent-tip-thum">
+          <a href="#"><%= image_tag(@car.image) %></a>
+          <h3><%=@car.model %></h3>
+        </div>
+      <% end %>
+      <br>
+      <br>
     </div>
   </div>
-
+  <!--  <div class="field">-->
+  <%#= form.label :car_id %>
+  <%#= form.text_field :car_id %>
+  <!--  </div>-->
+  <div class="row">
+    <div class="col-md-5"></div>
+    <div class="col-md-4">
+      <div class="field">
+        <%#= form.label :rank %>
+        <div id="star-rating">
+        </div>
+      </div>
+      <br>
+    </div>
+  </div>
   <div class="field">
-    <%= form.label :content %>
-    <%= form.text_area :content %>
+    <%= form.text_area(:content, size: '100x10', placeholder: "
+    Write Your Feedback Here....", autofocus: true) %>
   </div>
 
-  <div class="actions">
-    <%= form.submit %>
+
+  <div class="row">
+    <div class="col-md-5"></div>
+    <div class="col-md-4">
+      <div class="actions input-submit">
+        <%= form.submit 'Commit', :class => "rent-btn" %>
+      </div>
+    </div>
   </div>
 <% end %>
 
